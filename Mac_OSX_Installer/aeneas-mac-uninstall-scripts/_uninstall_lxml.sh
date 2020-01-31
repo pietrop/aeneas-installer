@@ -3,10 +3,11 @@ IFS=$'\n'
 
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
-#python -m ensurepip > /dev/null
-#sudo -H pip uninstall -y setuptools
+python3 -m ensurepip > /dev/null
 
-echo "Uninstalling python-2.7.11 packages..."
+echo "Uninstalling python-lxml..."
+
+sudo -H pip3 uninstall -y lxml
 
 function pkgutil-rm {
 	location=$(pkgutil --pkg-info $1 | grep "location:" | cut -d':' -f2 | sed -e "s/^[[:space:]]*//")
@@ -19,12 +20,9 @@ function pkgutil-rm {
 	sudo pkgutil --forget $1
 }
 
-pkgs=`pkgutil --pkgs | grep "org.python"`
-if [[ ! -z $pkgs ]]; then
-	sudo rm -rf /usr/local/Cellar/python
-	for pkg in $pkgs; do
-		pkgutil-rm $pkg
-	done
+pkg=`pkgutil --pkgs | grep "lxml"`
+if [[ ! -z $pkg ]]; then
+	pkgutil-rm $pkg
 fi
 
 sudo chown -R $USER:admin /usr/local

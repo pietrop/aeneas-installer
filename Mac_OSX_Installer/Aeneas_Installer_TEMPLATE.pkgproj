@@ -22,7 +22,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>ffmpeg-4.2</string>
+				<string>ffmpeg-[FFMPEG_VER]</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -39,7 +39,7 @@
 			<key>PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>./aeneas-mac-installer-packages/ffmpeg-4.2.pkg</string>
+				<string>./aeneas-mac-installer-packages/ffmpeg-[FFMPEG_VER].pkg</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -66,7 +66,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>espeak-1.48.04_2</string>
+				<string>espeak-[ESPEAK_VER]</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -83,7 +83,7 @@
 			<key>PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>./aeneas-mac-installer-packages/espeak-1.48.04_2.pkg</string>
+				<string>./aeneas-mac-installer-packages/espeak-[ESPEAK_VER].pkg</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -110,7 +110,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>python-3.7.4</string>
+				<string>python-[PYTHON_VER]</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -127,7 +127,7 @@
 			<key>PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>./aeneas-mac-installer-packages/python-3.7.4.pkg</string>
+				<string>./aeneas-mac-installer-packages/python-[PYTHON_VER].pkg</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -154,7 +154,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>numpy-1.17.1</string>
+				<string>numpy-[NUMPY_VER]</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -171,7 +171,7 @@
 			<key>PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>./aeneas-mac-installer-packages/numpy-1.17.1.pkg</string>
+				<string>./aeneas-mac-installer-packages/numpy-[NUMPY_VER].pkg</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -198,7 +198,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>lxml-4.4.1</string>
+				<string>lxml-[LXML_VER]</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -215,7 +215,7 @@
 			<key>PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>./aeneas-mac-installer-packages/lxml-4.4.1.pkg</string>
+				<string>./aeneas-mac-installer-packages/lxml-[LXML_VER].pkg</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -242,7 +242,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>bs4-4.8.0</string>
+				<string>bs4-[BS4_VER]</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -259,7 +259,7 @@
 			<key>PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>./aeneas-mac-installer-packages/bs4-4.8.0.pkg</string>
+				<string>./aeneas-mac-installer-packages/bs4-[BS4_VER].pkg</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -286,7 +286,7 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>aeneas-1.7.3.0</string>
+				<string>aeneas-[AENEAS_VER]</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>PAYLOAD_SIZE</key>
@@ -303,7 +303,7 @@
 			<key>PATH</key>
 			<dict>
 				<key>PATH</key>
-				<string>./aeneas-mac-installer-packages/aeneas-1.7.3.0.pkg</string>
+				<string>./aeneas-mac-installer-packages/aeneas-[AENEAS_VER].pkg</string>
 				<key>PATH_TYPE</key>
 				<integer>1</integer>
 			</dict>
@@ -863,7 +863,7 @@
 				<key>NAME</key>
 				<string>Developer ID Installer: Daniel Bair (RZRD74Y6H6)</string>
 				<key>PATH</key>
-				<string>/Users/danielbair/Library/Keychains/login.keychain</string>
+				<string>/Users/[USER]/Library/Keychains/login.keychain</string>
 			</dict>
 			<key>EXCLUDED_FILES</key>
 			<array>
@@ -1034,7 +1034,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>aeneas-mac-setup-1.7.3.0_2</string>
+			<string>aeneas-mac-setup-[INSTALLER_VER]</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>

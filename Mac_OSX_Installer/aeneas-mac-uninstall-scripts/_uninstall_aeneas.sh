@@ -3,11 +3,11 @@ IFS=$'\n'
 
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
-python -m ensurepip > /dev/null
+python3 -m ensurepip > /dev/null
 
-echo "Uninstalling python-beautifulsoup4..."
+echo "Uninstalling python-aeneas..."
 
-sudo -H pip uninstall -y beautifulsoup4
+sudo -H pip3 uninstall -y aeneas
 
 function pkgutil-rm {
 	location=$(pkgutil --pkg-info $1 | grep "location:" | cut -d':' -f2 | sed -e "s/^[[:space:]]*//")
@@ -20,9 +20,10 @@ function pkgutil-rm {
 	sudo pkgutil --forget $1
 }
 
-pkg=`pkgutil --pkgs | grep "bs4"`
+pkg=`pkgutil --pkgs | grep "aeneas"`
 if [[ ! -z $pkg ]]; then
 	pkgutil-rm $pkg
+	# sudo rm -f /usr/local/bin/aeneas*
 fi
 
 sudo chown -R $USER:admin /usr/local

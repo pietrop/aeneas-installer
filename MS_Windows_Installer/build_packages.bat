@@ -18,15 +18,42 @@ IF EXIST "C:\Program Files (x86)" GOTO WIN64PATH
   (call )
 :ENDIF
 
-C:\Python27\python -m ensurepip
-C:\Python27\python -m pip install -U pip setuptools wheel
+IF EXIST "%PF32%\Inno Setup 6" GOTO INNO6PATH
+:INNO5PATH
+  set INNOPATH=%PF32%\Inno Setup 5
+  (call )
+  GOTO ENDIF
+:INNO6PATH
+  set INNOPATH=%PF32%\Inno Setup 6
+  (call )
+:ENDIF
 
-C:\Python27\python -m pip install -U patch
+IF NOT EXIST "%cd%\python-3.7.4.exe" (
+  echo Downloading Python 3.7.4...
+  %CURL% "https://www.python.org/ftp/python/3.7.4/python-3.7.4.exe" -o "%cd%\python-3.7.4.exe"
+)
+IF EXIST "C:\Python37-32\python.exe" (
+  IF NOT EXIST "%cd%\python-3.7.4.exe" (
+    echo Installing Python 3.7.4...
+    python-3.7.4.exe /quiet InstallAllUsers=1 TargetDir=C:\Python37-32 PrependPath=1
+  )
+) ELSE (
+  echo Could not find Python 3.7.4...
+  START https://www.python.org/downloads/release/python-374/
+)
 
-C:\Python27\python -m pip install -U wget
+C:\Python37-32\python -m ensurepip
+set pip=C:\Python37-32\Scripts\pip
+
+%pip% install -U pip setuptools wheel
+
+%pip% install -U patch
+
+%pip% install -U wget
+
 2>nul curl.exe --version
 if %ERRORLEVEL%==0 goto exeCurl
-  REM set CURL=C:\Python27\python -m wget
+  REM set CURL=C:\Python37-32\python -m wget
   set CURL=call curl.bat -L
   goto endIf
 :exeCurl
@@ -45,49 +72,33 @@ REM   "%cd%\setup_espeak-1.48.04.exe" /SILENT
   echo START http://internode.dl.sourceforge.net/project/espeak/espeak/espeak-1.48/setup_espeak-1.48.04.exe
 )
 
-DEL "%cd%\ffmpeg-3.2-win32-static.zip"
-IF NOT EXIST "%cd%\ffmpeg-3.2-win32-static.zip" (
+REM DEL "%cd%\ffmpeg-4.2-win32-static.zip"
+IF NOT EXIST "%cd%\ffmpeg-4.2-win32-static.zip" (
   echo Downloading FFmpeg...
-  %CURL% https://archive.org/download/ffmpeg-3.2-win32-static/ffmpeg-3.2-win32-static.zip -o %cd%\ffmpeg-3.2-win32-static.zip
-  REM %CURL% https://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-3.2-win32-static.zip -o %cd%\ffmpeg-3.2-win32-static.zip
+  REM %CURL% https://archive.org/download/ffmpeg-4.2-win32-static/ffmpeg-4.2-win32-static.zip -o %cd%\ffmpeg-3.2-win32-static.zip
+  %CURL% https://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-4.2-win32-static.zip -o %cd%\ffmpeg-4.2-win32-static.zip
 )
-IF NOT EXIST "%cd%\setup_ffmpeg-3.2.exe" (
-  "%PF32%\7-Zip\7z.exe" x ffmpeg-*-win32-static.zip -aoa
-  rmdir /q/s ffmpeg-3.2
-  move /y ffmpeg-*-win32-static ffmpeg-3.2
-  "%PF32%\Inno Setup 5\ISCC.exe" FFmpeg_Installer.iss
+IF NOT EXIST "%cd%\setup_ffmpeg-4.2.exe" (
+  "%PF32%\7-Zip\7z.exe" x ffmpeg-4.2-win32-static.zip -aoa
+  rmdir /q/s ffmpeg-4.2
+  move /y ffmpeg-4.2-win32-static ffmpeg-4.2
+  "%INNOPATH%\ISCC.exe" FFmpeg_Installer.iss
 )
-IF EXIST "%cd%\setup_ffmpeg-3.0.2.exe" (
+IF EXIST "%cd%\setup_ffmpeg-4.2.exe" (
 REM   echo Installing FFmpeg...
-REM   "%cd%\setup_ffmpeg-3.0.2.exe" /SILENT
+REM   "%cd%\setup_ffmpeg-4.2.exe" /SILENT
 ) ELSE (
   echo Could not find FFmpeg...
-  echo START http://internode.dl.sourceforge.net/project/espeak/espeak/espeak-1.48/setup_espeak-1.48.04.exe
+  echo START https://ffmpeg.zeranoe.com/builds/
 )
 
+%pip% install -U numpy
+%pip% install -U aeneas lxml beautifulsoup4 soupsieve
 
-C:\Python27\python -m pip download pip==9.0.1
-C:\Python27\python -m pip download beautifulsoup4==4.5.1
-C:\Python27\python -m pip download lxml==3.6.0
-C:\Python27\python -m pip download numpy==1.11.2
+%pip% wheel pip
+%pip% wheel numpy
+%pip% wheel aeneas
 
-C:\Python27\python -m pip install -U numpy-1.11.2-cp27-none-win32.whl
-C:\Python27\python -m pip install -U lxml-3.6.0-cp27-none-win32.whl
-C:\Python27\python -m pip install -U beautifulsoup4-4.5.1-py2-none-any.whl
-
-C:\Python27\python -m pip download aeneas==1.7.2
-
-RMDIR /S /Q aeneas-1.7.2.0
-"%PF32%\7-Zip\7z.exe" e aeneas-1.7.2.0.tar.gz -aoa
-"%PF32%\7-Zip\7z.exe" x aeneas-1.7.2.0.tar -aoa
-echo copying espeak.lib to C:\Python27\libs\
-copy /b/v/y espeak.lib C:\Python27\libs\
-cd aeneas-1.7.2.0
-REM copy ..\aeneas-patches\setupmeta.py .
-REM C:\Python27\python.exe -m patch -v -p 1 --debug ..\aeneas-patches\1.7.0.0-windows.diff
-C:\Python27\python setup.py build_ext --inplace
-C:\Python27\python setup.py bdist_wheel
-copy /b/v/y dist\aeneas-*-win32.whl ..\
 cd %CURDIR%
 
 REM call install_packages.bat
@@ -96,18 +107,13 @@ REM C:\Windows\System32\ping 127.0.0.1 -n 10 -w 1000 > NUL
 
 echo.
 set PYTHONIOENCODING=UTF-8
-REM C:\Python27\python -m aeneas.diagnostics
-REM C:\Python27\python -m aeneas.tools.execute_task --version
-REM C:\Python27\python -m aeneas.tools.synthesize_text list "This is a test|with two lines" eng -v C:\Windows\Temp\test.wav
-REM echo.
+C:\Python37-32\python -m aeneas.diagnostics
+C:\Python37-32\python -m aeneas.tools.execute_task --version
+C:\Python37-32\python -m aeneas.tools.synthesize_text list "This is a test|with two lines" eng -v C:\Windows\Temp\test.wav
+echo.
 
 REM C:\Windows\System32\ping 127.0.0.1 -n 5 -w 1000 > NUL
 
-IF NOT EXIST "%cd%\python-2.7.13.msi" (
-  echo Downloading Python 2.7.13...
-  %CURL% https://www.python.org/ftp/python/2.7.13/python-2.7.13.msi -o %cd%\python-2.7.13.msi
-)
-
-"%PF32%\Inno Setup 5\ISCC.exe" Aeneas_Installer.iss
+echo Now run build_installer.bat
 
 ENDLOCAL

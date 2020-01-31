@@ -15,4 +15,7 @@ if [ ! -n "$(grep 'PATH=/usr/local/bin:/usr/local/sbin:$PATH' $HOME/.bash_profil
 	chown $USER $HOME/.bash_profile
 fi
 
-chown -R $USER:admin /usr/local
+chown -R $USER:admin /usr/local/*
+pip3 install -U /usr/local/share/aeneas_tools/numpy-*.whl
+chown -R $USER:admin /usr/local/*
+
